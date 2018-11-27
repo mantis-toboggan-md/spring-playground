@@ -12,15 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/prefix")
 public class TasksController {
 
-    //can also use @requestmapping to indiscriminately respond to get/post/put etc
-    @GetMapping("/tasks")
-    //name of the method doesn't matter
-    public String getTasks() {
-        return "These are tasks";
-    }
+//    //can also use @requestmapping to indiscriminately respond to get/post/put etc
+//    @GetMapping("/tasks")
+//    //name of the method doesn't matter
+//    public String getTasks() {
+//        return "These are tasks";
+//    }
 
     @PostMapping("/tasks")
     public String createTask() {
         return "You just POSTed to /tasks";
     }
+
+    //map to a custom class to grab req params more easily:
+    @GetMapping("/tasks")
+    public String getTasks(TaskInfo taskInfo) {
+        return String.format("sort-by is %s; owner is %s", taskInfo.getSortBy(), taskInfo.getOwner());
+    }
+
+    //alternatively, use a WebRequest class as parameter and generate a map with <paramname>.getParameterMap();
 }
